@@ -1,0 +1,14 @@
+{
+    "predict-mode": "trend-ratio",
+    "source-folder": "./Data/stock_data/data_for_teacher",
+    "target-folder": "./Data/stock_data/data_for_student",
+    "source-time": ["2016-12-31 23:59:59", "2021-01-01 00:00:00"],
+    "tar-train-time": ["2019-12-31 23:59:59", "2021-01-01 00:00:00"],
+    "tar-test-time": ["2020-12-31 23:59:59", "2021-07-01 00:00:00"],
+    "source": ["ACB", "BID", "HDB"],
+    "target": ["TCB", "TPB"],
+    "preprocess-setting": {
+        "seq-len": 22,
+        "future": 5
+    }
+}
