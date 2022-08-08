@@ -23,7 +23,7 @@ def time_series_processing(data, mode, setting):
         x = x[:n_sample]
         y = y[:n_sample]
         x_last = x_last[:n_sample]
-        x = np.array(x)
+        x = np.array(x).squeeze()
         y = np.array(y)
         x_last = np.array(x_last)
 
@@ -40,14 +40,18 @@ def preprocessing(path, name, time, setting):
     data = get_data(path, start_day, finish_day)
     scaler = MinMaxScaler(feature_range=(0.1, 1))
     scaler.fit(data)
-    data = scaler.transform(data)
     
     mode = setting["predict-mode"]
     config = setting["preprocess-setting"]
-    data = time_series_processing(data, mode, config)
+    data_domain = time_series_processing(data, mode, config)
+    
+    normalize_data = scaler.transform(data)
+    normalize_data = time_series_processing(normalize_data, mode, config)
+    
+    data_domain["X"] = normalize_data["X"]
     
     return {
         "name": name,
         "scaler": scaler,
-        "data": data
+        "data": data_domain
     }
