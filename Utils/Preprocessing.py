@@ -49,9 +49,13 @@ def preprocessing(path, name, time, setting):
     normalize_data = time_series_processing(normalize_data, mode, config)
     
     data_domain["X"] = normalize_data["X"]
+    y_scaler = MinMaxScaler()
+    y_scaler.fit(data_domain["Y"])
+    data_domain["Y"] = y_scaler.transform(data_domain["Y"])
     
     return {
         "name": name,
-        "scaler": scaler,
-        "data": data_domain
+        "x_scaler": scaler,
+        "y_scaler": y_scaler,
+        "data": data_domain,
     }
